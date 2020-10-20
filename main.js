@@ -109,11 +109,10 @@ function edittodo(id,todoclass){
         {
         let i=0
         todos.forEach(todo=>{
-            console.log(todo.id,id,i)
             if(todo.id===Number(id))
                 {
                 
-                console.log(todos.splice(i,1))
+                todos.splice(i,1)
                 }
             i+=1
         })
