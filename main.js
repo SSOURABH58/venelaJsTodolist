@@ -7,27 +7,37 @@ let todos
 document.addEventListener("DOMContentLoaded",gettodos)
 buttion.addEventListener("click",addtask)
 tasks.addEventListener("click",taskevents)
-filter.addEventListener("click",filterlist)
+filter.addEventListener("change",filterlist)
 
-function addtask(){
-    const id = todos.length
+function addtask(e){
+    e.preventDefault();
+    let id = 0
+    if(todos.length>0){
+        id=todos[todos.length-1].id+1
+    }
     let isthair = 0
     let task = input.value
     todos.forEach(todo=>{
         if(task === todo.task)
             isthair+=1
     })
-    if(isthair){
-        task=`${task} (${isthair})`
+    if(!isthair){
+        isthair=""
     }
-    createlist(task,"taskcont",id)
-    savetodo(input.value,"taskcont",id)
+    
+    createlist(input.value,"taskcont",id,isthair)
+    savetodo(input.value,"taskcont",id,isthair)
     input.value=""
 }
 
-function createlist(todo,todoclass,id){
+function createlist(todo,todoclass,id,copy){
+
+
     const taskcont = document.createElement('div')
     const tasklable = document.createElement('li')
+    if(copy)
+        tasklable.innerText=`${todo}(${copy})`
+    else
     tasklable.innerText=todo
     const taskcheak = document.createElement('button')
     taskcheak.innerHTML='<i class="fa fa-check-square"></i>'
@@ -99,26 +109,25 @@ function filterlist(e){
     })
 }
 
-function savetodo(task,todoclass,id){
-    todos.push({"id":id,"task":task,"taskclass":todoclass})
+function savetodo(task,todoclass,id,copy){
+    todos.push({"id":id,"task":task,"taskclass":todoclass,"copy":copy})
     localStorage.setItem("todos",JSON.stringify(todos))
 }
 
 function edittodo(id,todoclass){
-    if(todoclass === "-1")
-        {
         let i=0
         todos.forEach(todo=>{
             if(todo.id===Number(id))
                 {
-                
-                todos.splice(i,1)
+                    if(todoclass === "-1"){
+                        todos.splice(i,1)
+                    }else{
+                        todos[i].taskclass=todoclass
+                    }
                 }
             i+=1
         })
-        }
-    else
-        todos[id].taskclass=todoclass
+    
     localStorage.setItem("todos",JSON.stringify(todos))
 }
 
@@ -128,5 +137,5 @@ function gettodos(){
         todos = []
     else
         todos = JSON.parse(localStorage.getItem("todos")) 
-    todos.forEach(todo => createlist(todo.task,todo.taskclass,todo.id))
+    todos.forEach(todo => createlist(todo.task,todo.taskclass,todo.id,todo.copy))
 }
