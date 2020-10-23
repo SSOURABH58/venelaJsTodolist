@@ -14,6 +14,8 @@ buttion.addEventListener("click",addtask)
 tasks.addEventListener("click",taskevents)
 filter.addEventListener("change",filterlist)
 
+setInterval(showtime, 1000);
+
 function addtask(e){
     e.preventDefault();
     let id = 0
