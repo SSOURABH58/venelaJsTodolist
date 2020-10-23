@@ -2,9 +2,14 @@ const input = document.querySelector(".inputbox")
 const buttion = document.querySelector(".addtask")
 const tasks = document.querySelector(".tasks")
 const filter=document.querySelector(".filter")
+const weatherblock = document.querySelector(".weather")
+const weatherblockd = document.querySelector(".weatherd")
+const timetab = document.querySelector(".timetab")
 let todos
 
 document.addEventListener("DOMContentLoaded",gettodos)
+document.addEventListener("DOMContentLoaded",weatherapi)
+document.addEventListener("DOMContentLoaded",showtime)
 buttion.addEventListener("click",addtask)
 tasks.addEventListener("click",taskevents)
 filter.addEventListener("change",filterlist)
@@ -138,4 +143,59 @@ function gettodos(){
     else
         todos = JSON.parse(localStorage.getItem("todos")) 
     todos.forEach(todo => createlist(todo.task,todo.taskclass,todo.id,todo.copy))
+}
+
+function weatherapi(){
+    let lon
+    let lat
+    const apikey = "a5cda7877c18c0085082f44f8d49527b"
+    // please use your own API key 
+    navigator.geolocation.getCurrentPosition(position=>{
+        lon = position.coords.longitude
+        lat = position.coords.latitude
+
+        const api = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`
+
+        fetch(api)
+            .then(responce => {return responce.json()})
+            .then(data=>{
+                let icon = ""
+                switch(data.weather[0].main){
+                    case "Clear": icon="☀" 
+                    break
+                    case "Thunderstorm": icon="🌩" 
+                    break
+                    case "Rain": icon="🌦" 
+                    break
+                    case "Snow": icon="❄" 
+                    break
+                    case "Clouds": icon="☁" 
+                    break
+                    case "Atmosphere": icon="🌫" 
+                    break
+                    case "Drizzle": icon="🌧" 
+                    break
+                }
+                weatherblock.innerHTML=`${icon} ${data.weather[0].main} at ${(data.main.temp-273.15).toFixed(2)}℃ in ${data.name}`
+                weatherblockd.childNodes[1].innerHTML = `${icon} ${(data.main.temp-273.15).toFixed()}°c`
+                weatherblockd.childNodes[3].innerText = `${data.weather[0].main} in ${data.name}`
+            })
+    })
+}
+
+function showtime(){
+    let data = Date()
+    let date = data.split(" ",5)
+
+    let time= date[4].split(":",2)
+
+    if(time[0]>12){
+        time[0]-=12
+        time.push("pm")
+    }else{
+        time.push("am")
+    }
+
+    timetab.childNodes[1].innerHTML = `${time[0]}:${time[1]}${time[2]}`
+    timetab.childNodes[3].innerText = `${date[0]} , ${date[2]} ${date[1]} ${date[3]}`
 }

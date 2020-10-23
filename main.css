@@ -17,6 +17,38 @@ body{
 header h1{
     font-size: 4rem;
 }
+.top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.weatherd,.timetab{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: flex-end;
+
+}
+
+.weatherd h1,.weatherd p{
+    margin-top: 2%;
+    margin-right: 20px;
+}
+.timetab h1,.timetab p{
+    margin-top: 2%;
+    margin-left: 20px;
+}
+.weatherd h1,.timetab h1{
+    font-size: 3rem;
+}
+.weatherd p,.timetab p{
+    text-align: center;
+    margin-top: 0;
+}
+.timetab{
+    align-self: flex-start;
+}
+
 
 header,.inputtabe,form{
     
@@ -28,10 +60,10 @@ header,.inputtabe,form{
 
 }
 
-header{
-    margin-top:5%;
-}
 
+.weather{
+    display: none;
+}
 
 .inputbox,.addtask,.filter{
     font-size: 1.3rem;
@@ -75,10 +107,26 @@ header{
     min-width: 30%;
 }
 
+
 @media screen and (max-width:850px) {
     .taskcont{
         min-width: 50%;
     }
+    
+    .weatherd{
+        display: none;
+    }
+    .timetab{
+        display: none;
+    }
+    header{
+        margin-top:10%;
+        flex-direction: column;
+    }
+    .weather{
+        display: block;
+    }
+    
 }
 @media screen and (max-width:500px) {
     .taskcont{
@@ -89,7 +137,18 @@ header{
     }
     header{
         margin-top:10%;
+        flex-direction: column;
     }
+    .weather{
+        display: block;
+    }
+    .weatherd{
+        display: none;
+    }
+    .timetab{
+        display: none;
+    }
+    
 }
 
 .tasklable,.taskcheak,.tasktrash{

@@ -8,8 +8,19 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+    <div class="top">
+    <div class="timetab">
+        <h1>--:--..</h1>
+        <p>- , - - -</p>
+    </div>
+    <div class="weatherd">
+        <h1>--°c</h1>
+        <p>allow location/no internet</p>
+    </div>
+    </div>
     <header>
         <h1>To Do List</h1>
+        <p class="weather">allow location or no internet</p>
     </header>
     <div class="inputtabe">
         <form action="#">
@@ -18,11 +29,11 @@
         </form>
         <select name="filter" class="filter">
             <option value="all">All</option>
-            <option value="complated">Complated</option>
-            <option value="uncomplated">Uncomplated</option>
+            <option value="complated">Completed</option>
+            <option value="uncomplated">Uncompleted</option>
         </select>
     </div>
     <ul class="tasks"></ul>
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>
