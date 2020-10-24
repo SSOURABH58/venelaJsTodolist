@@ -153,7 +153,7 @@ function gettodos(){
 function weatherapi(){
     let lon
     let lat
-    const apikey = "a5cda7877c18c0085082f44f8d49527b"
+    const apikey = ""
     // please use your own API key 
     navigator.geolocation.getCurrentPosition(position=>{
         lon = position.coords.longitude
