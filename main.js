@@ -8,7 +8,8 @@ const timetab = document.querySelector(".timetab")
 let todos
 
 document.addEventListener("DOMContentLoaded",gettodos)
-document.addEventListener("DOMContentLoaded",weatherapi)
+// document.addEventListener("DOMContentLoaded",weatherapi)
+document.addEventListener("DOMContentLoaded",weatherapiproxy)
 document.addEventListener("DOMContentLoaded",showtime)
 buttion.addEventListener("click",addtask)
 tasks.addEventListener("click",taskevents)
@@ -147,6 +148,8 @@ function gettodos(){
     todos.forEach(todo => createlist(todo.task,todo.taskclass,todo.id,todo.copy))
 }
 
+//old function --- using 3rd party api diractly
+
 function weatherapi(){
     let lon
     let lat
@@ -184,6 +187,39 @@ function weatherapi(){
             })
     })
 }
+
+// my proxy for the weather api
+
+function weatherapiproxy(){
+    navigator.geolocation.getCurrentPosition(position=>{
+        const lat =position.coords.latitude
+        const lon = position.coords.longitude
+        const coords = {lat,lon}
+
+        const opc = {
+            method : 'POST',
+            headers : {
+                'Content-Type':'application/json'
+            },
+            body : JSON.stringify(coords)
+        }
+
+        // lok.innerHTML=`<p>latitude = ${lat}°</p><p>longitude = ${lon}°</p>`
+
+        fetch('https://node-server-proxy-1.herokuapp.com/weather',opc)
+            .then(res=>{return res.json()})
+            .then(data=>{
+                // wet.innerHTML=`${data.icon} ${data.title} at ${data.temp} in ${data.city}`
+
+                weatherblock.innerHTML=`${data.icon} ${data.title} at ${data.temp}℃ in ${data.city}`
+                weatherblockd.childNodes[1].innerHTML = `${data.icon} ${data.temp}°c`
+                weatherblockd.childNodes[3].innerText = `${data.title} in ${data.city}`
+                
+            })
+    })
+}
+
+
 
 function showtime(){
     let data = Date()
