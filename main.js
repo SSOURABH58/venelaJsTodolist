@@ -153,7 +153,7 @@ function gettodos(){
 function weatherapi(){
     let lon
     let lat
-    const apikey = ""
+    const apikey = "a5cda7877c18c0085082f44f8d49527b"
     // please use your own API key 
     navigator.geolocation.getCurrentPosition(position=>{
         lon = position.coords.longitude
@@ -181,6 +181,21 @@ function weatherapi(){
                     case "Drizzle": icon="🌧" 
                     break
                 }
+
+                const date = new Date()
+                const hours = date.getHours()
+
+                let isnight = hours<6 || hours>18
+
+                if(isnight){
+                    switch(icon){
+                        case "☀": icon="🌙" 
+                        break
+                        case "🌦" : icon="🌧" 
+                        break
+                    }
+                }
+
                 weatherblock.innerHTML=`${icon} ${data.weather[0].main} at ${(data.main.temp-273.15).toFixed(2)}℃ in ${data.name}`
                 weatherblockd.childNodes[1].innerHTML = `${icon} ${(data.main.temp-273.15).toFixed()}°c`
                 weatherblockd.childNodes[3].innerText = `${data.weather[0].main} in ${data.name}`
@@ -210,9 +225,24 @@ function weatherapiproxy(){
             .then(res=>{return res.json()})
             .then(data=>{
                 // wet.innerHTML=`${data.icon} ${data.title} at ${data.temp} in ${data.city}`
+                let icon = data.icon
 
-                weatherblock.innerHTML=`${data.icon} ${data.title} at ${data.temp}℃ in ${data.city}`
-                weatherblockd.childNodes[1].innerHTML = `${data.icon} ${data.temp}°c`
+                const date = new Date()
+                const hours = date.getHours()
+
+                let isnight = hours<6 || hours>18
+
+                if(isnight){
+                    switch(icon){
+                        case "☀": icon="🌙" 
+                        break
+                        case "🌦" : icon="🌧" 
+                        break
+                    }
+                }
+
+                weatherblock.innerHTML=`${icon} ${data.title} at ${data.temp}℃ in ${data.city}`
+                weatherblockd.childNodes[1].innerHTML = `${icon} ${data.temp}°c`
                 weatherblockd.childNodes[3].innerText = `${data.title} in ${data.city}`
                 
             })
