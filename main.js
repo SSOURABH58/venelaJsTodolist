@@ -16,6 +16,7 @@ tasks.addEventListener("click",taskevents)
 filter.addEventListener("change",filterlist)
 
 setInterval(showtime, 1000);
+setInterval(showtime, 1000*60*60*1);
 
 function addtask(e){
     e.preventDefault();
@@ -153,7 +154,7 @@ function gettodos(){
 function weatherapi(){
     let lon
     let lat
-    const apikey = "a5cda7877c18c0085082f44f8d49527b"
+    const apikey = "your api key from open weather"
     // please use your own API key 
     navigator.geolocation.getCurrentPosition(position=>{
         lon = position.coords.longitude

@@ -9,7 +9,7 @@ body{
     font-size:16px;
     font-family: 'Segoe UI';
     color:white;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -27,6 +27,7 @@ header h1{
     flex-direction: column;
     justify-content: center;
     align-self: flex-end;
+    text-align: center;
 
 }
 
